@@ -18,7 +18,6 @@ const getImagesUrl = async (req: Request, res: Response) => {
 };
 const postImageUrl = async (req: Request, res: Response) => {
   try {
-    const newProdToAdd = await addProduct(req.body);
   } catch (error) {
     handleHttpError(res, "ERROR_POST_IMAGE");
   }
