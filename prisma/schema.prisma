@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     String @default("USER")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  price       Decimal
+  code        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  productImage ImageUrl[]
+
+  subCategoryId Int
+  subCategory   SubCategory @relation(fields: [subCategoryId], references: [id])
+}
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  subCategory SubCategory[]
+}
+
+model SubCategory {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  products Product[]
+}
+
+model ImageUrl {
+  id       Int    @id @default(autoincrement())
+  imageUrl String
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+}
