@@ -28,7 +28,7 @@ app.use("/api/v1/products", productRouter);
 app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/subcategories", subCategoryRouter);
 
-app.use((req: Request, res: Response) => {
+app.use((req, res) => {
   res.status(404).send("404 - No se encuentra la ruta especificada");
 });
 /**
