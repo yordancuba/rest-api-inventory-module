@@ -3,12 +3,12 @@ dotenv.config();
 import cors from "cors";
 import express, { Request, Response } from "express";
 //All routes import
-import { productRouter } from "./routes/v1/product.routes.ts";
-import { categoryRouter } from "./routes/v1/category.routes.ts";
-import { subCategoryRouter } from "./routes/v1/subcategory.routes.ts";
-import { authRouter } from "./routes/v1/authRoutes.routes.ts";
+import { productRouter } from "./routes/v1/product.routes";
+import { categoryRouter } from "./routes/v1/category.routes";
+import { subCategoryRouter } from "./routes/v1/subcategory.routes";
+import { authRouter } from "./routes/v1/authRoutes.routes";
 import { request } from "http";
-import { userRouter } from "./routes/v1/users.routes.ts";
+import { userRouter } from "./routes/v1/users.routes";
 
 const app = express();
 app.use(cors());
