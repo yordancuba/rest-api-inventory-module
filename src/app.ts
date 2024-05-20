@@ -3,12 +3,11 @@ dotenv.config();
 import cors from "cors";
 import express, { Request, Response } from "express";
 //All routes import
-import { productRouter } from "./routes/v1/product.routes";
-import { categoryRouter } from "./routes/v1/category.routes";
-import { subCategoryRouter } from "./routes/v1/subcategory.routes";
-import { authRouter } from "./routes/v1/authRoutes.routes";
-import { request } from "http";
-import { userRouter } from "./routes/v1/users.routes";
+import { productRouter } from "./routes/v1/product.routes.js";
+import { categoryRouter } from "./routes/v1/category.routes.js";
+import { subCategoryRouter } from "./routes/v1/subcategory.routes.js";
+import { authRouter } from "./routes/v1/authRoutes.routes.js";
+import { userRouter } from "./routes/v1/users.routes.js";
 
 const app = express();
 app.use(cors());
@@ -28,7 +27,7 @@ app.use("/api/v1/products", productRouter);
 app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/subcategories", subCategoryRouter);
 
-app.use((req, res) => {
+app.use((req: Request, res: Response) => {
   res.status(404).send("404 - No se encuentra la ruta especificada");
 });
 /**

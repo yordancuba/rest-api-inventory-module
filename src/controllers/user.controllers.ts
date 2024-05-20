@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
-import { handleHttpError } from "../utils/error.handle";
+import { handleHttpError } from "../utils/error.handle.js";
 import {
   changeOneUserRole,
   deleteOneUser,
   getAllUsers,
   getOneUser,
   updateOneUser,
-} from "../services/user.services";
-import { prisma } from "../utils/prisma.client";
+} from "../services/user.services.js";
 
 /**
  *

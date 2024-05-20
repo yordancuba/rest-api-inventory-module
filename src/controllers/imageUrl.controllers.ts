@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { handleHttpError } from "../utils/error.handle";
-import { addProduct } from "../services/product.services";
+import { handleHttpError } from "../utils/error.handle.js";
 
 const getImageUrl = async (req: Request, res: Response) => {
   try {

@@ -5,7 +5,7 @@ import {
   getImagesUrl,
   postImageUrl,
   updateImageUrl,
-} from "../../controllers/imageUrl.controllers";
+} from "../../controllers/imageUrl.controllers.js";
 
 const imageUrlRouter = Router();
 

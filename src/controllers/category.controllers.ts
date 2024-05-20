@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { handleHttpError } from "../utils/error.handle";
+import { handleHttpError } from "../utils/error.handle.js";
 import {
   addCategory,
   deleteOneCategory,
   getAllCategories,
   getOneCategory,
   updateOneCategory,
-} from "../services/category.services";
+} from "../services/category.services.js";
 
 const getCategory = async ({ params }: Request, res: Response) => {
   try {

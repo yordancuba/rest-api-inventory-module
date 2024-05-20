@@ -1,8 +1,7 @@
 import { Prisma } from "@prisma/client";
-import { Product, ProductAdd } from "../interfaces/product.interface";
-import { prisma } from "../utils/prisma.client";
-import { validateDataError } from "../utils/error.handle";
-import { getOneSubCategory } from "./subCategory.services";
+import { prisma } from "../utils/prisma.client.js";
+import { validateDataError } from "../utils/error.handle.js";
+import { getOneSubCategory } from "./subCategory.services.js";
 
 const addProduct = async (
   name: string,

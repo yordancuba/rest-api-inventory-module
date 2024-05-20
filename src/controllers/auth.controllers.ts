@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
-import { handleHttpError } from "../utils/error.handle";
-import { loginUser, registerNewUser } from "../services/auth.services";
-import { generateToken } from "../utils/jwt.handle";
-import { Auth, LoginAuth } from "../interfaces/auth.interface";
+import { handleHttpError } from "../utils/error.handle.js";
+import { loginUser, registerNewUser } from "../services/auth.services.js";
+import { generateToken } from "../utils/jwt.handle.js";
 
 const authRegister = async (req: Request, res: Response) => {
   try {

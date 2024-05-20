@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
-import { Category } from "../interfaces/category.interface";
-import { validateDataError } from "../utils/error.handle";
-import { prisma } from "../utils/prisma.client";
+import { Category } from "../interfaces/category.interface.js";
+import { validateDataError } from "../utils/error.handle.js";
+import { prisma } from "../utils/prisma.client.js";
 
 /**
  *

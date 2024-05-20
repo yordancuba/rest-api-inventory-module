@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { handleHttpError } from "../utils/error.handle";
+import { handleHttpError } from "../utils/error.handle.js";
 import {
   addSubCategory,
   deleteOneSubCategory,
   getAllSubCategories,
   getOneSubCategory,
   updateOneSubCategory,
-} from "../services/subCategory.services";
+} from "../services/subCategory.services.js";
 //import { SubCategory } from "@prisma/client";
-import { SubCategory } from "../interfaces/subcategory.interface";
+import { SubCategory } from "../interfaces/subcategory.interface.js";
 
 /**
  *

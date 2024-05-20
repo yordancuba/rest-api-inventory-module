@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
-import { validateDataError } from "../utils/error.handle";
-import { prisma } from "../utils/prisma.client";
+import { validateDataError } from "../utils/error.handle.js";
+import { prisma } from "../utils/prisma.client.js";
 
 /**
  *

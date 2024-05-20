@@ -1,7 +1,5 @@
-import { RequestExt } from "../interfaces/requestExtended.interfaces";
-import { User } from "../interfaces/user.interface";
-import { handleHttpError } from "../utils/error.handle";
-import { prisma } from "../utils/prisma.client";
+import { RequestExt } from "../interfaces/requestExtended.interfaces.js";
+import { handleHttpError } from "../utils/error.handle.js";
 import { Response, NextFunction } from "express";
 
 const isAdmin = async (req: RequestExt, res: Response, next: NextFunction) => {

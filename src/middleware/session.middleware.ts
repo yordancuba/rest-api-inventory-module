@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { jwtPayloadData, verifyToken } from "../utils/jwt.handle";
-import { handleHttpError } from "../utils/error.handle";
-import { RequestExt } from "../interfaces/requestExtended.interfaces";
+import { jwtPayloadData, verifyToken } from "../utils/jwt.handle.js";
+import { handleHttpError } from "../utils/error.handle.js";
+import { RequestExt } from "../interfaces/requestExtended.interfaces.js";
 
 const checkSession = (req: RequestExt, res: Response, next: NextFunction) => {
   try {

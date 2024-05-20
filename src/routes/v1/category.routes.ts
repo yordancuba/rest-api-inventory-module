@@ -5,7 +5,7 @@ import {
   getCategory,
   postCategory,
   updateCategory,
-} from "../../controllers/category.controllers";
+} from "../../controllers/category.controllers.js";
 
 const categoryRouter = Router();
 

@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { handleHttpError } from "../utils/error.handle";
+import { handleHttpError } from "../utils/error.handle.js";
 import {
   addProduct,
   deleteOneProduct,
   getAllProducts,
   getOneProduct,
   updateOneProduct,
-} from "../services/product.services";
-import { Product, ProductAdd } from "../interfaces/product.interface";
+} from "../services/product.services.js";
+import { Product, ProductAdd } from "../interfaces/product.interface.js";
 
 /**
  *

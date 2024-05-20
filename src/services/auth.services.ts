@@ -1,8 +1,8 @@
-import { Auth, LoginAuth } from "../interfaces/auth.interface";
-import { passwordHash, verifyHashedPassword } from "../utils/bcrypt.handle";
-import { validateDataError } from "../utils/error.handle";
-import { generateToken } from "../utils/jwt.handle";
-import { prisma } from "../utils/prisma.client";
+import { Auth, LoginAuth } from "../interfaces/auth.interface.js";
+import { passwordHash, verifyHashedPassword } from "../utils/bcrypt.handle.js";
+import { validateDataError } from "../utils/error.handle.js";
+import { generateToken } from "../utils/jwt.handle.js";
+import { prisma } from "../utils/prisma.client.js";
 
 /**
  *

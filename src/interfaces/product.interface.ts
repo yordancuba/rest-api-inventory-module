@@ -1,4 +1,4 @@
-import { ImageUrl } from "./imageUrl.interfaces";
+import { ImageUrl } from "./imageUrl.interfaces.js";
 
 export interface Product {
   id?: number;

@@ -5,9 +5,9 @@ import {
   getUser,
   getUsers,
   updateUser,
-} from "../../controllers/user.controllers";
-import { checkSession } from "../../middleware/session.middleware";
-import { isAdmin } from "../../middleware/isAdmin.middleware";
+} from "../../controllers/user.controllers.js";
+import { checkSession } from "../../middleware/session.middleware.js";
+import { isAdmin } from "../../middleware/isAdmin.middleware.js";
 
 const userRouter = Router();
 
