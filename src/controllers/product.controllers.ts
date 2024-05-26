@@ -8,6 +8,7 @@ import {
   updateOneProduct,
 } from "../services/product.services.js";
 import { Product, ProductAdd } from "../interfaces/product.interface.js";
+import { matchedData } from "express-validator";
 
 /**
  *
@@ -55,7 +56,8 @@ const getProducts = async (req: Request, res: Response) => {
  */
 const postProduct = async (req: Request, res: Response) => {
   try {
-    const { name, price, code, description, subCategoryId }: Product = req.body;
+    const body: Product = matchedData(req);
+    const { name, price, code, description, subCategoryId }: Product = body;
 
     const productToAdd = await addProduct(
       name,

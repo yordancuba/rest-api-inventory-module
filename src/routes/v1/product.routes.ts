@@ -6,6 +6,10 @@ import {
   postProduct,
   updateProduct,
 } from "../../controllers/product.controllers.js";
+import {
+  validatorAddProduct,
+  validatorUpdateOneProduct,
+} from "../../validators/products.validators.js";
 
 const productRouter = Router();
 
@@ -17,9 +21,9 @@ productRouter
 
   .get("/:id", getProduct)
 
-  .post("/", postProduct)
+  .post("/", validatorAddProduct, postProduct)
 
-  .put("/:id", updateProduct)
+  .put("/:id", validatorUpdateOneProduct, updateProduct)
 
   .delete("/:id", deleteProduct);
 

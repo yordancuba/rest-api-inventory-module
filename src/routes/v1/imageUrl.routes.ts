@@ -6,20 +6,22 @@ import {
   postImageUrl,
   updateImageUrl,
 } from "../../controllers/imageUrl.controllers.js";
+import { uploadMulter } from "../../utils/multer.handle.js";
+import {
+  validatorAddImageUrl,
+  validatorUpdateOneImageUrl,
+} from "../../validators/imagesUrl.validators.js";
 
 const imageUrlRouter = Router();
 
-/**
- * Recovery all products
- */
 imageUrlRouter
   .get("/", getImagesUrl)
 
   .get("/:id", getImageUrl)
 
-  .post("/", postImageUrl)
+  .post("/", uploadMulter.single("image"), validatorAddImageUrl, postImageUrl)
 
-  .put("/:id", updateImageUrl)
+  .put("/:id", validatorUpdateOneImageUrl, updateImageUrl)
 
   .delete("/:id", deleteImageUrl);
 

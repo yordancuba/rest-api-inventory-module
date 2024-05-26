@@ -1,4 +1,4 @@
-export interface Auth extends LoginAuth {
+export interface RegisterAuth extends LoginAuth {
   name: string;
 }
 

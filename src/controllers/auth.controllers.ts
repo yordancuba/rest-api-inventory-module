@@ -2,10 +2,13 @@ import { Request, Response } from "express";
 import { handleHttpError } from "../utils/error.handle.js";
 import { loginUser, registerNewUser } from "../services/auth.services.js";
 import { generateToken } from "../utils/jwt.handle.js";
+import { matchedData } from "express-validator";
+import { LoginAuth, RegisterAuth } from "../interfaces/auth.interface.js";
 
 const authRegister = async (req: Request, res: Response) => {
   try {
-    const responseNewUser = await registerNewUser(req.body);
+    const body: RegisterAuth = matchedData(req);
+    const responseNewUser = await registerNewUser(body);
     if (responseNewUser.status !== "OK")
       handleHttpError(res, `${responseNewUser.errorMessage}`, 400);
     else {
@@ -34,7 +37,8 @@ const authRegister = async (req: Request, res: Response) => {
 
 const authLogin = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const body: LoginAuth = matchedData(req);
+    const { email, password } = body;
     const loginOneUser = await loginUser(email, password);
 
     if (loginOneUser.errorMessage === "USER_OR_PASSWORD_WRONG")

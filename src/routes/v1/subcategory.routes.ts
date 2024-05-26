@@ -7,6 +7,10 @@ import {
   postSubCategory,
   updateSubCategory,
 } from "../../controllers/subCategory.controllers.js";
+import {
+  validatorAddSubCategory,
+  validatorUpdateOneSubCategory,
+} from "../../validators/subcategories.validators.js";
 
 const subCategoryRouter = Router();
 
@@ -18,9 +22,9 @@ subCategoryRouter
 
   .get("/:id", getSubCategory)
 
-  .post("/", postSubCategory)
+  .post("/", validatorAddSubCategory, postSubCategory)
 
-  .put("/:id", updateSubCategory)
+  .put("/:id", validatorUpdateOneSubCategory, updateSubCategory)
 
   .delete("/:id", deleteSubCategory);
 

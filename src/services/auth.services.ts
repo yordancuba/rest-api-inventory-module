@@ -1,4 +1,4 @@
-import { Auth, LoginAuth } from "../interfaces/auth.interface.js";
+import { RegisterAuth, LoginAuth } from "../interfaces/auth.interface.js";
 import { passwordHash, verifyHashedPassword } from "../utils/bcrypt.handle.js";
 import { validateDataError } from "../utils/error.handle.js";
 import { generateToken } from "../utils/jwt.handle.js";
@@ -9,7 +9,7 @@ import { prisma } from "../utils/prisma.client.js";
  * @param param0 Params data from new User
  * @returns new User if all data is correct or null if not
  */
-const registerNewUser = async ({ name, email, password }: Auth) => {
+const registerNewUser = async ({ name, email, password }: RegisterAuth) => {
   try {
     if (!name || !email || !password)
       validateDataError("NAME_EMAIL_PASSWORD_ARE_REQUIRED");
@@ -25,6 +25,8 @@ const registerNewUser = async ({ name, email, password }: Auth) => {
     });
     return { status: "OK", errorMessage: null, data: userToRegister };
   } catch (e) {
+    console.log(e);
+
     return { status: "ERROR", errorMessage: `ERROR_REGISTERING`, data: null };
   }
 };

@@ -8,21 +8,18 @@ import { prisma } from "../utils/prisma.client.js";
  */
 const getAllUsers = async () => {
   try {
-    const users = await prisma.user.findMany();
-
-    const usersToSend = users.map(({ id, name, email }) => {
-      const user = {
-        id,
-        name,
-        email,
-      };
-      return user;
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
     });
 
     return {
       status: "OK",
       errorMessage: null,
-      data: usersToSend,
+      data: users,
     };
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -39,22 +36,23 @@ const getAllUsers = async () => {
  */
 const getOneUser = async (id: number) => {
   try {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: {
         id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
       },
     });
 
     if (!user) return validateDataError("USER_NOT_FOUND");
 
-    const userToSend = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    };
-
-    return { status: "OK", errorMessage: null, data: userToSend };
+    return { status: "OK", errorMessage: null, data: user };
   } catch (e) {
+    console.log(e);
+
     throw validateDataError("ERROR_GET_USER");
   }
 };
@@ -83,6 +81,7 @@ const updateOneUser = async (id: number, name?: string, email?: string) => {
 
     return { status: "OK", errorMessage: null, data: { name, email } };
   } catch (e) {
+    console.log(e);
     return validateDataError("ERROR_UPDATE_USER");
   }
 };

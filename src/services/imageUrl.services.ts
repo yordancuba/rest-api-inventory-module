@@ -2,31 +2,62 @@ import { Prisma } from "@prisma/client";
 import { validateDataError } from "../utils/error.handle.js";
 import { prisma } from "../utils/prisma.client.js";
 import { getOneProduct } from "./product.services.js";
+import { cloudinaryApi } from "../utils/cloudinary.handle.js";
+import { getOneUser } from "./user.services.js";
 
 /**
  *
  * @param param0 image url and productId
  * @returns
  */
-const addImageUrl = async (imageUrl: string, productId: number) => {
+const addImageUrl = async (
+  imageUrl: string,
+  productId?: number,
+  userId?: number
+) => {
   try {
-    if (!imageUrl || !productId) return validateDataError("FIELDS_EMPTY");
+    const idUserToString = String(userId);
+    const idUserToNumber = parseInt(idUserToString, 10);
+    const idProductToString = String(productId);
+    const idProductToNumber = parseInt(idProductToString, 10);
 
-    const searchImage = await getOneProduct(productId);
+    if (!imageUrl) return validateDataError("IMAGE_PATH_EMPTY");
+    if (!productId && !userId)
+      return validateDataError("NOT_PRODUCTID_OR_USERID_FOR_IMAGE");
 
-    if (!searchImage) {
-      return validateDataError("ERROR_SEARCHING_IMAGE");
+    if (productId) {
+      const searchProductForImage = await getOneProduct(idProductToNumber);
+      if (searchProductForImage.status !== "OK") {
+        return validateDataError("PRODUCTID_NOT_FOUND");
+      }
     }
+
+    if (userId) {
+      const searchUserForImage = await getOneUser(idUserToNumber);
+      if (searchUserForImage.status !== "OK") {
+        return validateDataError("USERID_NOT_FOUND");
+      }
+    }
+
+    // Upload image to Cloudinary
+    const imageUploaded = await cloudinaryApi.v2.uploader.upload(imageUrl);
 
     const imageToAdd = await prisma.imageUrl.create({
       data: {
-        imageUrl,
-        productId,
+        imageUrl: imageUploaded.secure_url,
+        public_id: imageUploaded.public_id,
+        productId: idProductToNumber,
+        userId: idUserToNumber,
       },
     });
 
-    return { status: "OK", errorMessage: null, data: imageToAdd };
+    if (!imageToAdd)
+      return validateDataError("ERROR_ADD_IMAGE_TO_IMAGEURL_TABLE");
+
+    return { status: "OK", errorMessage: null, data: imageUploaded };
   } catch (e) {
+    console.log(e);
+
     return validateDataError("ERROR_ADD_IMAGE");
   }
 };
@@ -78,7 +109,11 @@ const getOneImageUrl = async (id: number) => {
  * @param imageUrl ImageUrl url to update
  * @returns
  */
-const updateOneImageUrl = async (id: number, imageUrl: string) => {
+const updateOneImageUrl = async (
+  id: number,
+  imageUrl: string,
+  public_id: string
+) => {
   try {
     const imageUrlUpdate = await prisma.imageUrl.update({
       where: {
@@ -86,6 +121,7 @@ const updateOneImageUrl = async (id: number, imageUrl: string) => {
       },
       data: {
         imageUrl,
+        public_id,
       },
     });
 

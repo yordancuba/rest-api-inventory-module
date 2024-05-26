@@ -6,6 +6,10 @@ import {
   postCategory,
   updateCategory,
 } from "../../controllers/category.controllers.js";
+import {
+  validatorAddCategory,
+  validatorUpdateOneCategory,
+} from "../../validators/categories.validators.js";
 
 const categoryRouter = Router();
 
@@ -17,9 +21,9 @@ categoryRouter
 
   .get("/:id", getCategory)
 
-  .post("/", postCategory)
+  .post("/", validatorAddCategory, postCategory)
 
-  .put("/:id", updateCategory)
+  .put("/:id", validatorUpdateOneCategory, updateCategory)
 
   .delete("/:id", deleteCategory);
 

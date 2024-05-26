@@ -8,6 +8,12 @@ import {
 } from "../../controllers/user.controllers.js";
 import { checkSession } from "../../middleware/session.middleware.js";
 import { isAdmin } from "../../middleware/isAdmin.middleware.js";
+import {
+  validatorChangeRoleUser,
+  validatorDeleteOneUser,
+  validatorGetOneUser,
+  validatorUpdateOneUser,
+} from "../../validators/users.validators.js";
 
 const userRouter = Router();
 
@@ -17,12 +23,18 @@ const userRouter = Router();
 userRouter
   .get("/", checkSession, isAdmin, getUsers)
 
-  .get("/:id", getUser)
+  .get("/:id", checkSession, isAdmin, validatorGetOneUser, getUser)
 
-  .put("/:id", updateUser)
+  .put("/:id", checkSession, isAdmin, validatorUpdateOneUser, updateUser)
 
-  .delete("/:id", deleteUser)
+  .delete("/:id", checkSession, isAdmin, validatorDeleteOneUser, deleteUser)
 
-  .put("/changerole/:id", changeRole);
+  .put(
+    "/changerole/:id",
+    checkSession,
+    isAdmin,
+    validatorChangeRoleUser,
+    changeRole
+  );
 
 export { userRouter };

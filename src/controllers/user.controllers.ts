@@ -7,6 +7,7 @@ import {
   getOneUser,
   updateOneUser,
 } from "../services/user.services.js";
+import { body, matchedData } from "express-validator";
 
 /**
  *
@@ -51,16 +52,18 @@ const getUser = async ({ params }: Request, res: Response) => {
  * @param param0 Datos correspondientes al User a actualizar.
  * @param res Response con un objeto que contiene informacion de status, error y/o datos de un User actualizado
  */
-const updateUser = async ({ params, body }: Request, res: Response) => {
+const updateUser = async (req: Request, res: Response) => {
   try {
-    const { id } = params;
+    //const id = matchedData(req.params);
+    const bodyUser = matchedData(req);
+    const { id, name, email } = bodyUser;
     const idToSend = +id;
-    const { name, email } = body;
 
     if (name === undefined && email === undefined) {
-      handleHttpError(res, "NAME_AND_EMAIL_ARE_REQUIRED", 400);
+      handleHttpError(res, "NAME_OR_EMAIL_ARE_REQUIRED", 400);
     } else {
       const userToUpdate = await updateOneUser(idToSend, name, email);
+
       if (userToUpdate.status !== "OK")
         handleHttpError(res, `${userToUpdate.errorMessage}`, 400);
       else {
@@ -72,6 +75,8 @@ const updateUser = async ({ params, body }: Request, res: Response) => {
       }
     }
   } catch (error) {
+    console.log(error);
+
     handleHttpError(res, "ERROR_UPDATING_USER");
   }
 };
