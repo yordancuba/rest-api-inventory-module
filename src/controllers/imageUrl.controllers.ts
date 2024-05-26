@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 import { handleHttpError } from "../utils/error.handle.js";
 import { cloudinaryApi } from "../utils/cloudinary.handle.js";
-import { addImageUrl } from "../services/imageUrl.services.js";
+import {
+  addImageUrl,
+  updateOneImageUrl,
+} from "../services/imageUrl.services.js";
+import { ImageUrl } from "../interfaces/imageUrl.interfaces.js";
+import { matchedData } from "express-validator";
 
 /**
  * Devolvera la URL de la imagen dependiendo del Id
@@ -81,6 +86,25 @@ const postImageUrl = async (req: Request, res: Response) => {
  */
 const updateImageUrl = async (req: Request, res: Response) => {
   try {
+    const body: ImageUrl = matchedData(req);
+    const { id, imageUrl, public_id, userId, productId }: ImageUrl = body;
+
+    const imageToUpdate = await updateOneImageUrl(
+      id,
+      imageUrl,
+      public_id,
+      userId,
+      productId
+    );
+
+    if (imageToUpdate.status !== "OK")
+      return handleHttpError(res, "ERROR_UPDATING_IMAGEURL");
+
+    res.status(200).send({
+      status: "OK",
+      errorMessage: null,
+      data: imageToUpdate,
+    });
   } catch (error) {
     handleHttpError(res, "ERROR_UPDATE_IMAGE");
   }

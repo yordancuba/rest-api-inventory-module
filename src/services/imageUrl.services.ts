@@ -110,9 +110,11 @@ const getOneImageUrl = async (id: number) => {
  * @returns
  */
 const updateOneImageUrl = async (
-  id: number,
+  id: number | undefined,
   imageUrl: string,
-  public_id: string
+  public_id: string,
+  userId?: number,
+  productId?: number
 ) => {
   try {
     const imageUrlUpdate = await prisma.imageUrl.update({
@@ -122,6 +124,8 @@ const updateOneImageUrl = async (
       data: {
         imageUrl,
         public_id,
+        userId,
+        productId,
       },
     });
 

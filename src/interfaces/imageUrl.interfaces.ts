@@ -1,5 +1,7 @@
 export interface ImageUrl {
   id?: number;
   imageUrl: string;
-  productId: number;
+  public_id: string;
+  userId?: number;
+  productId?: number;
 }
