@@ -9,7 +9,7 @@ const checkSession = (req: RequestExt, res: Response, next: NextFunction) => {
     const jwt = jwtByUser.split(" ").pop() || "";
     const verifyJwt = verifyToken(jwt);
 
-    if (!verifyJwt) return handleHttpError(res, "NO_JWT_VALID", 401);
+    if (!verifyJwt) return handleHttpError(res, "NO_VALID_SESSION", 401);
 
     req.userSession = jwtPayloadData(jwt);
 

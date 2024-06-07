@@ -1,9 +1,14 @@
 import { Router } from "express";
-import { authLogin, authRegister } from "../../controllers/auth.controllers.js";
+import {
+  authLogin,
+  authLogout,
+  authRegister,
+} from "../../controllers/auth.controllers.js";
 import {
   validatorLogin,
   validatorRegister,
 } from "../../validators/auth.validators.js";
+import { checkSession } from "../../middleware/session.middleware.js";
 
 const authRouter = Router();
 //const loginRouter = express.Router();
@@ -11,6 +16,8 @@ const authRouter = Router();
 authRouter
   .post("/register", validatorRegister, authRegister)
 
-  .post("/login", validatorLogin, authLogin);
+  .post("/login", validatorLogin, authLogin)
+
+  .post("/logout", checkSession, authLogout);
 
 export { authRouter };

@@ -2,7 +2,6 @@ import pkg from "jsonwebtoken";
 const { sign, verify } = pkg;
 import { JwtPayloadData } from "../interfaces/jwt.interface.js";
 const JWT_SECRET = process.env.JWT_SECRET || "tokensecreto.333";
-import { Response } from "express";
 
 /**
  *
