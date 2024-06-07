@@ -31,7 +31,11 @@ const authRegister = async (req: Request, res: Response) => {
         res.send({
           status: "OK",
           errorMessage: null,
-          data: { email: responseNewUser.data.email, token },
+          data: {
+            id: responseNewUser.data.id,
+            email: responseNewUser.data.email,
+            token,
+          },
         });
       } else handleHttpError(res, "ERROR_REGISTER", 400);
     }
@@ -70,4 +74,27 @@ const authLogin = async (req: Request, res: Response) => {
   }
 };
 
-export { authRegister, authLogin };
+const authLogout = async (req: Request, res: Response) => {
+  try {
+    const cookieJwt = req.cookies.token;
+
+    if (!cookieJwt) return handleHttpError(res, "NO_SESSION", 400);
+
+    // Para eliminar la cookie.
+    //*Es necesario ponerle en el primer parametro el mismo nombre que cuando se crea la cookie en Register o Login (en este caso "token")
+    res.cookie("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+
+    res.send({
+      status: "OK",
+      errorMessage: null,
+      data: "",
+    });
+  } catch (error) {
+    handleHttpError(res, "ERROR_LOGIN", 400);
+  }
+};
+
+export { authRegister, authLogin, authLogout };
