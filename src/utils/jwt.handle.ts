@@ -2,6 +2,7 @@ import pkg from "jsonwebtoken";
 const { sign, verify } = pkg;
 import { JwtPayloadData } from "../interfaces/jwt.interface.js";
 const JWT_SECRET = process.env.JWT_SECRET || "tokensecreto.333";
+import { Response } from "express";
 
 /**
  *
@@ -12,6 +13,15 @@ const generateToken = (payload: JwtPayloadData) => {
   const jwt = sign(payload, JWT_SECRET, {
     expiresIn: "2h",
   });
+
+  /* // Poner el Token en cookies por HttpOnly
+  res.cookie("token", jwt, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV !== "development",
+    sameSite: "strict",
+    maxAge: 3600000,
+  }); */
+
   return jwt;
 };
 

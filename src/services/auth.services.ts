@@ -41,14 +41,14 @@ const loginUser = async (email: string, password: string) => {
       },
     });
 
-    if (!foundUser) return validateDataError("USER_OR_PASSWORD_WRONG");
+    if (!foundUser) return validateDataError("EMAIL_OR_PASSWORD_WRONG");
 
     const passwordToCompare = await verifyHashedPassword(
       password,
       foundUser.password
     );
 
-    if (!passwordToCompare) return validateDataError("USER_OR_PASSWORD_WRONG");
+    if (!passwordToCompare) return validateDataError("EMAIL_OR_PASSWORD_WRONG");
 
     const token = generateToken({
       email: foundUser.email,

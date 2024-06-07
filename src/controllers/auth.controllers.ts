@@ -5,6 +5,8 @@ import { generateToken } from "../utils/jwt.handle.js";
 import { matchedData } from "express-validator";
 import { LoginAuth, RegisterAuth } from "../interfaces/auth.interface.js";
 
+const JWT_SECRET = process.env.JWT_SECRET || "tokensecreto.333";
+
 const authRegister = async (req: Request, res: Response) => {
   try {
     const body: RegisterAuth = matchedData(req);
@@ -12,15 +14,18 @@ const authRegister = async (req: Request, res: Response) => {
     if (responseNewUser.status !== "OK")
       handleHttpError(res, `${responseNewUser.errorMessage}`, 400);
     else {
-      /* const token = generateToken({
-        name: responseNewUser.data!.name,
-        email: responseNewUser.data!.email,
-        role: responseNewUser.data!.role,
-      }); */
       if (responseNewUser.data) {
         const token = generateToken({
           email: responseNewUser.data.email,
           role: responseNewUser.data.role,
+        });
+
+        // Poner el Token en cookies por HttpOnly
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== "development",
+          sameSite: "strict",
+          maxAge: 7200000,
         });
 
         res.send({
