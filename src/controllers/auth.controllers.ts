@@ -50,13 +50,21 @@ const authLogin = async (req: Request, res: Response) => {
       return handleHttpError(res, `${loginOneUser.errorMessage}`, 403);
 
     if (loginOneUser.status !== "OK")
-      handleHttpError(res, `${loginOneUser.errorMessage}`, 400);
-    else
-      res.send({
-        status: "OK",
-        errorMessage: null,
-        data: loginOneUser.data,
-      });
+      return handleHttpError(res, `${loginOneUser.errorMessage}`, 400);
+
+    // Poner el Token en cookies por HttpOnly
+    res.cookie("token", loginOneUser.data?.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: "strict",
+      maxAge: 7200000,
+    });
+
+    res.send({
+      status: "OK",
+      errorMessage: null,
+      data: loginOneUser.data,
+    });
   } catch (error) {
     handleHttpError(res, "ERROR_LOGIN", 400);
   }
