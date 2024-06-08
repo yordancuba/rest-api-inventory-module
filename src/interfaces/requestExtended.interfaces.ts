@@ -6,6 +6,7 @@ import { Request } from "express";
 
 interface RequestExt extends Request {
   userSession?: {
+    id: number;
     name: string;
     email: string;
     role: string;

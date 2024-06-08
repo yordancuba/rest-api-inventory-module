@@ -51,8 +51,6 @@ const getOneUser = async (id: number) => {
 
     return { status: "OK", errorMessage: null, data: user };
   } catch (e) {
-    console.log(e);
-
     throw validateDataError("ERROR_GET_USER");
   }
 };

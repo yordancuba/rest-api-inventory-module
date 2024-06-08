@@ -67,3 +67,8 @@ model ImageUrl {
   productId Int?
   product   Product? @relation(fields: [productId], references: [id])
 }
+
+model BlackListToken {
+  id    Int    @id @default(autoincrement())
+  token String @unique
+}

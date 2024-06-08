@@ -25,8 +25,6 @@ const registerNewUser = async ({ name, email, password }: RegisterAuth) => {
     });
     return { status: "OK", errorMessage: null, data: userToRegister };
   } catch (e) {
-    console.log(e);
-
     return { status: "ERROR", errorMessage: `ERROR_REGISTERING`, data: null };
   }
 };
@@ -51,6 +49,7 @@ const loginUser = async (email: string, password: string) => {
     if (!passwordToCompare) return validateDataError("EMAIL_OR_PASSWORD_WRONG");
 
     const token = generateToken({
+      id: foundUser.id,
       email: foundUser.email,
       role: foundUser.role,
     });
@@ -58,7 +57,12 @@ const loginUser = async (email: string, password: string) => {
     return {
       status: "OK",
       errorMessage: null,
-      data: { name: foundUser.name, email: foundUser.email, token },
+      data: {
+        id: foundUser.id,
+        name: foundUser.name,
+        email: foundUser.email,
+        token,
+      },
     };
   } catch (error) {
     return validateDataError("ERROR_LOGIN");
